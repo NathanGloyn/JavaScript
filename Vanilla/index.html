@@ -1,8 +1,18 @@
 <html>
- <head title="Vanilla js>
-  <script src="list.js"></script>
+ <head title="Vanilla js">
+  <script type="text/javascript" src="list.js"></script>
  </head>
  <body>
-    <h2>To do/h2> 
+    <h2>To do</h2> 
+     <button id="btnNewItem">New Item</button>
+     <div id="newItemDiv" style="visibility:hidden">
+         <label>Details:</label><input type="text" id="newItem" /><button id="btnAddNewItem">Add</button>
+     </div>
+     <div id="list"></div>
   </body>
+  <script>
+      window.onload = function () {
+          setUp();
+      }
+  </script>
 </html>
