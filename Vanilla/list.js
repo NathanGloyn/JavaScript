@@ -1,28 +1,41 @@
-function setUp() {
+function Presenter() {
 
-    addHandlers();
-
-    function addHandlers() {
+    this.addHandlers = function() {
         console.log("Add handlers");
-        window.document.getElementById('btnNewItem').onclick = displayNewItem;
-        window.document.getElementById('newItem').onkeydown = addNewItemKeyPress;
-        window.document.getElementById('btnAddNewItem').onclick = addNewItem;
+        getElement('btnNewItem').onclick = displayNewItem;
+        getElement('newItem').onkeydown = addNewItemKeyPress;
+        getElement('btnAddNewItem').onclick = addNewItem;
     }
 
     function displayNewItem() {
         console.log("New item clicked");
-        window.document.getElementById('newItemDiv').style.visibility = "visible";
+        getElement('newItemDiv').style.visibility = "visible";
+        getElement('newItem').focus();
     }
 
     function addNewItemKeyPress(event) {
-        if (event.keyCode == 13) {
-            addNewItem(event);
+        switch (event.keyCode) {
+            case 13:
+                addNewItem(event);
+                break;
+            case 27:
+                hideNewItem();
+                break;
         }
     }
 
     function addNewItem(event) {
-        window.document.getElementById('newItemDiv').style.visibility = "hidden";
+        hideNewItem();
     }
+
+    function hideNewItem() {
+        getElement('newItemDiv').style.visibility = "hidden";
+    }
+
+    function getElement(elementId) {
+        return window.document.getElementById(elementId);
+    }
+
 }
 
 
