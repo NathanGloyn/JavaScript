@@ -3,14 +3,14 @@ function Presenter() {
     this.addHandlers = function() {
         console.log("Add handlers");
         getElement('btnNewItem').onclick = displayNewItem;
-        getElement('newItem').onkeydown = addNewItemKeyPress;
+        getElement('txtNewItem').onkeydown = addNewItemKeyPress;
         getElement('btnAddNewItem').onclick = addNewItem;
     }
 
     function displayNewItem() {
         console.log("New item clicked");
         getElement('newItemDiv').style.visibility = "visible";
-        getElement('newItem').focus();
+        getElement('txtNewItem').focus();
     }
 
     function addNewItemKeyPress(event) {
@@ -25,10 +25,17 @@ function Presenter() {
     }
 
     function addNewItem(event) {
+        var list = getElement('list');
+        var itemText = getElement('txtNewItem').value;
+        var newListItem = window.document.createElement("li");
+
+        newListItem.innerHTML = itemText;
+        list.appendChild(newListItem);
         hideNewItem();
     }
 
     function hideNewItem() {
+        getElement('txtNewItem').value = "";
         getElement('newItemDiv').style.visibility = "hidden";
     }
 
