@@ -3,7 +3,7 @@ function Presenter() {
     this.addHandlers = function() {
         console.log("Add handlers");
         getElement('btnNewItem').onclick = displayNewItem;
-        getElement('txtNewItem').onkeydown = addNewItemKeyPress;
+        getElement('txtNewItem').onkeyup = addNewItemKeyPress;
         getElement('btnAddNewItem').onclick = addNewItem;
     }
 
