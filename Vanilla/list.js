@@ -28,8 +28,12 @@ function Presenter() {
         var list = getElement('list');
         var itemText = getElement('txtNewItem').value;
         var newListItem = window.document.createElement("li");
-
-        newListItem.innerHTML = itemText;
+        var containingSpan = window.document.createElement("span");
+        var checkbox = window.document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        containingSpan.appendChild(checkbox);
+        newListItem.appendChild(containingSpan);
+        newListItem.innerHTML = newListItem.innerHTML + itemText;
         list.appendChild(newListItem);
         hideNewItem();
     }
