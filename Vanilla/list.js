@@ -1,5 +1,7 @@
 function Presenter() {
 
+    var listCount = 0;
+
     this.addHandlers = function() {
         console.log("Add handlers");
         getElement('btnNewItem').onclick = displayNewItem;
@@ -27,14 +29,8 @@ function Presenter() {
     function addNewItem(event) {
         var list = getElement('list');
         var itemText = getElement('txtNewItem').value;
-        var newListItem = window.document.createElement("li");
-        var containingSpan = window.document.createElement("span");
-        var checkbox = window.document.createElement("input");
-        checkbox.setAttribute("type", "checkbox");
-        containingSpan.appendChild(checkbox);
-        newListItem.appendChild(containingSpan);
-        newListItem.innerHTML = newListItem.innerHTML + itemText;
-        list.appendChild(newListItem);
+
+        list.appendChild(createListItemDOM(itemText));
         hideNewItem();
     }
 
@@ -47,6 +43,27 @@ function Presenter() {
         return window.document.getElementById(elementId);
     }
 
+    function createListItemDOM(itemText) {
+        var newListItem = createElement("li");
+        var containingSpan = createElement("span");
+        var checkbox = createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        listCount++;
+        checkbox.setAttribute("id", "item" + listCount);
+        var label = createElement("label");
+        label.setAttribute("for", "item" + listCount);
+        label.innerHTML = itemText;
+
+        containingSpan.appendChild(checkbox);
+        containingSpan.appendChild(label)
+        newListItem.appendChild(containingSpan);
+
+        return newListItem;
+    }
+
+    function createElement(tag) {
+        return window.document.createElement(tag);
+    }
 }
 
 
