@@ -1,0 +1,7 @@
+﻿ul {
+    list-style-type:none;
+}
+
+input[type="checkbox"]:checked~label{
+    text-decoration:line-through;
+}
