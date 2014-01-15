@@ -2,6 +2,10 @@
     list-style-type:none;
 }
 
+ul > li span label {
+    margin-left:10px
+}
+
 input[type="checkbox"]:checked~label{
     text-decoration:line-through;
 }

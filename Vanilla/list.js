@@ -1,68 +1,69 @@
-function Presenter() {
+function Presenter(document) {
 
     var listCount = 0;
 
+    var list = getElement('list'),
+        newItemBtn = getElement('btnNewItem'),
+        newItemDiv = getElement('newItemDiv'),
+        newItemTxt = getElement('txtNewItem');
+
+
     this.addHandlers = function() {
         console.log("Add handlers");
-        getElement('btnNewItem').onclick = displayNewItem;
-        getElement('txtNewItem').onkeyup = addNewItemKeyPress;
+        document.getElementsByTagName('body')[0].onkeyup = cancelEntry;
+        
+        newItemBtn.onclick = displayNewItem;
+        newItemTxt.onkeyup = addNewItem;
+
         getElement('btnAddNewItem').onclick = addNewItem;
     }
 
     function displayNewItem() {
         console.log("New item clicked");
-        getElement('newItemDiv').style.visibility = "visible";
-        getElement('txtNewItem').focus();
-    }
-
-    function addNewItemKeyPress(event) {
-        switch (event.keyCode) {
-            case 13:
-                addNewItem(event);
-                break;
-            case 27:
-                hideNewItem();
-                break;
-        }
+        newItemDiv.style.visibility = "visible";
+        newItemBtn.style.visibility = "hidden";
+        newItemTxt.focus();
     }
 
     function addNewItem(event) {
-        var list = getElement('list');
-        var itemText = getElement('txtNewItem').value;
+        if (event.keyCode == 13) {
+            var itemText = newItemTxt.value;
 
-        list.appendChild(createListItemDOM(itemText));
-        hideNewItem();
+            list.appendChild(createListItemDOM(itemText));
+            hideNewItem();
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+
+    function cancelEntry(event) {
+        if (event.keyCode === 27) {
+            hideNewItem();
+            event.preventDefault();
+            event.stopPropagation();
+        }
     }
 
     function hideNewItem() {
-        getElement('txtNewItem').value = "";
-        getElement('newItemDiv').style.visibility = "hidden";
+        newItemTxt.value = "";
+        newItemDiv.style.visibility = "hidden";
+        newItemBtn.style.visibility = "visible";
     }
 
     function getElement(elementId) {
-        return window.document.getElementById(elementId);
+        return document.getElementById(elementId);
     }
 
     function createListItemDOM(itemText) {
         var newListItem = createElement("li");
-        var containingSpan = createElement("span");
-        var checkbox = createElement("input");
-        checkbox.setAttribute("type", "checkbox");
-        listCount++;
-        checkbox.setAttribute("id", "item" + listCount);
-        var label = createElement("label");
-        label.setAttribute("for", "item" + listCount);
-        label.innerHTML = itemText;
 
-        containingSpan.appendChild(checkbox);
-        containingSpan.appendChild(label)
-        newListItem.appendChild(containingSpan);
+        newListItem.innerHTML = "<span><input type='checkbox' id='item" + listCount + "' /><label for='item" + listCount + "'>" + itemText + "</label></span>";
 
         return newListItem;
     }
 
     function createElement(tag) {
-        return window.document.createElement(tag);
+        return document.createElement(tag);
     }
 }
 
