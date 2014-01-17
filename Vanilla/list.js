@@ -27,12 +27,14 @@ function Presenter(document) {
 
     function addNewItem(event) {
         if (event.keyCode == 13) {
-            var itemText = newItemTxt.value;
-
-            list.appendChild(createListItemDOM(itemText));
-            hideNewItem();
-            event.preventDefault();
             event.stopPropagation();
+            var itemText = newItemTxt.value;
+            if (itemText) {
+                console.log("Create new list item");
+                list.appendChild(createListItemDOM(itemText));
+                hideNewItem();
+                event.preventDefault();
+            }
         }
     }
 
@@ -45,9 +47,11 @@ function Presenter(document) {
     }
 
     function hideNewItem() {
+        console.log("Hide new item entry");
         newItemTxt.value = "";
         newItemDiv.style.visibility = "hidden";
         newItemBtn.style.visibility = "visible";
+        newItemBtn.focus();
     }
 
     function getElement(elementId) {
