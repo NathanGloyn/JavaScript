@@ -1,4 +1,4 @@
-function Presenter(document) {
+(function Presenter(document) {
 
     var listCount = 0;
 
@@ -7,15 +7,18 @@ function Presenter(document) {
         newItemDiv = getElement('newItemDiv'),
         newItemTxt = getElement('txtNewItem');
 
+    document.addEventListener("DOMContentLoaded", function () {
+        addHandlers();
+    }, false);
 
-    this.addHandlers = function() {
+    function addHandlers () {
         console.log("Add handlers");
-        document.getElementsByTagName('body')[0].onkeyup = cancelEntry;
-        
-        newItemBtn.onclick = displayNewItem;
-        newItemTxt.onkeyup = addNewItem;
+        document.querySelector('body').addEventListener('keyup', cancelEntry, false);
 
-        getElement('btnAddNewItem').onclick = addNewItem;
+        newItemBtn.addEventListener('click', displayNewItem, false);
+        newItemTxt.addEventListener('keyup', addItemKeyPress, false);
+
+        getElement('btnAddNewItem').addEventListener('click', addNewItem, false);
     }
 
     function displayNewItem() {
@@ -25,16 +28,18 @@ function Presenter(document) {
         newItemTxt.focus();
     }
 
-    function addNewItem(event) {
+    function addItemKeyPress(event) {
         if (event.keyCode == 13) {
-            event.stopPropagation();
-            var itemText = newItemTxt.value;
-            if (itemText) {
-                console.log("Create new list item");
-                list.appendChild(createListItemDOM(itemText));
-                hideNewItem();
-                event.preventDefault();
-            }
+            addNewItem(event);
+        }
+    }
+
+    function addNewItem() {
+        var itemText = newItemTxt.value;
+        if (itemText) {
+            console.log("Create new list item");
+            list.appendChild(createListItemDOM(itemText));
+            hideNewItem();
         }
     }
 
@@ -69,7 +74,7 @@ function Presenter(document) {
     function createElement(tag) {
         return document.createElement(tag);
     }
-}
+}(window.document));
 
 
 function List() {

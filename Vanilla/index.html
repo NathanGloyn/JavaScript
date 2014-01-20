@@ -1,20 +1,17 @@
 <html>
- <head title="Vanilla js">
-  <script type="text/javascript" src="list.js"></script>
-  <link type="text/css" href="list.css" rel="stylesheet" />
- </head>
- <body>
-    <h2>To do</h2> 
-     <button id="btnNewItem">New Item</button>
-     <div id="newItemDiv" style="visibility:hidden" >
-         <label>Details:</label><input type="text" id="txtNewItem" /><button id="btnAddNewItem">Add</button>
-     </div>
-     <div id="listContainer">
-         <ul id="list"></ul>
-     </div>
-     <script type="text/javascript">
-         var presenter = new Presenter(document);
-         presenter.addHandlers();
-     </script>
-  </body>
+    <head>
+        <title>Vanilla.js</title>
+        <link type="text/css" href="list.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h2>To do</h2>
+        <button id="btnNewItem">New Item</button>
+        <div id="newItemDiv" style="visibility:hidden">
+            <label>Details:</label><input type="text" id="txtNewItem" /><button id="btnAddNewItem">Add</button>
+        </div>
+        <div id="listContainer">
+            <ul id="list"></ul>
+        </div>
+        <script type="text/javascript" src="list.js"></script>
+    </body>
 </html>
