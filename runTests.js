@@ -1,30 +1,27 @@
 var child_process = require('child_process');
 var Spooky = require('spooky');
+var stillRunning = true;
 
-var server = child_process.exec('node createServer.js',function(error, stdout, stderr) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-});
+var server = child_process.spawn('node', ['createServer.js']);
 
 var tests = [
 	'tests/basic_Page_Tests.js', 
 	'tests/displays_add_item.js', 
 	'tests/escape_hides_newItem.js'];
 
-var casperCommand = 'casperjs test ' + tests.join(" ");	
+var casperCommand = 'test ' + tests.join(" ");	
 	
-var casper = child_process.exec(casperCommand,function(error, stdout, stderr) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
+var casper = child_process.spawn('casperjs', [casperCommand]);
+
+casper.stdout.on('data', function(data){
+	console.log(data.toString());
 });
 
-process.on('exit', function(){
+casper.stderr.on('data', function(data){
+	console.log('Error: ' + data);
+});
+
+casper.on('exit', function(code){
 	server.kill();
-	casper.kill();
+	process.exit(0);
 });
